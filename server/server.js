@@ -16,14 +16,11 @@ var {generateLocationMsg} = require('./utils/message')
 app.use(express.static(publicPath));
 
 io.on('connection', (socket) => {
-    console.log('New User connected');
-
     socket.emit('newMsg', generateMsg('Admin', 'Welcome to the chat app'));
     socket.broadcast.emit('newMsg', generateMsg('Admin', 'New user has joined!'));
 
     // Listen for New Messages
     socket.on('createMessage', (msg, callback) => {
-        console.log('NewMsg:', msg);
         io.emit('newMsg', generateMsg(msg.from, msg.text));
         callback();
     });
@@ -34,7 +31,7 @@ io.on('connection', (socket) => {
     });
 
     socket.on('disconnect', (socket) => {
-        console.log('User was disconnected!');
+        io.emit('newMsg', generateMsg('Admin', 'User has left!'));
     });
 });
 
