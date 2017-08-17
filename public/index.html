@@ -3,19 +3,29 @@
 <head>
     <meta charset="utf-8">
     <title>Socket IO</title>
+    <link rel= "stylesheet" href="/css/styles.css">
 </head>
-<body>
-    <h3>Chat Application</h3>
+<body class="chat">
+    <!-- Sidebar -->
+    <div class="chat__sidebar">
+        <h3>Online Users</h3>
+        <div id="users"></div>
+    </div>
 
-    <ol id='messages'></ol>
+    <!-- The Main Container -->
+    <div class="chat__main">
+        <ol id='messages' class="chat__messages"></ol>
 
-    <form id='message-form'>
-        <input name='message' type='text' placeholder='Message ...'/>
-        <button >Send</button>
-    </form>
+        <div class="chat__footer">
+            <form id='message-form'>
+                <input name='message' type='text' placeholder='Message ...' autofocus autocomplete="off" />
+                <button >Send</button>
+            </form>
+            <button id="send-location">Send Location</button>
+        </div>
+    </div>
 
-    <button id="send-location">Send Location</button>
-
+    <!-- External Links -->
     <script type= "text/javascript" src="/socket.io/socket.io.js"></script>
     <script type="text/javascript" src="/js/libs/jquery.js"></script>
     <script src = "/js/index.js"></script>

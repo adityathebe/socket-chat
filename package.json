@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node server/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "nodemon server/server.js",
+    "start": "node server/server.js"
   },
   "author": "Aditya Thebe <me@adityathebe.com> (http://adityathebe.com)",
   "license": "MIT",

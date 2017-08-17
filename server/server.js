@@ -11,19 +11,26 @@ var server = http.createServer(app);
 var io = socketIO(server);
 
 var {generateMsg} = require('./utils/message')
+var {generateLocationMsg} = require('./utils/message')
 
 app.use(express.static(publicPath));
 
 io.on('connection', (socket) => {
     console.log('New User connected');
 
-    socket.emit('newMsg', generateMsg('admin', 'Welcome to the chat app'));
-    socket.broadcast.emit('newMsg', generateMsg('admin', 'New user has joined!'));
+    socket.emit('newMsg', generateMsg('Admin', 'Welcome to the chat app'));
+    socket.broadcast.emit('newMsg', generateMsg('Admin', 'New user has joined!'));
 
+    // Listen for New Messages
     socket.on('createMessage', (msg, callback) => {
         console.log('NewMsg:', msg);
         io.emit('newMsg', generateMsg(msg.from, msg.text));
-        callback('Message Delivered!')
+        callback();
+    });
+
+    // Listen for Location Message Event
+    socket.on('createLocationMsg', (coords) => {
+        io.emit('newLocationMsg', generateLocationMsg('Admin', coords.lat, coords.lon))
     });
 
     socket.on('disconnect', (socket) => {
@@ -32,6 +39,5 @@ io.on('connection', (socket) => {
 });
 
 server.listen(port, () => {
-    console.log('Listening at port 3000');
-})
-
+    console.log(`Listening at port ${port}`);
+});
